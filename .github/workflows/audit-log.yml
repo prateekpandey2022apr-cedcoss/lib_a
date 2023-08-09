@@ -1,37 +1,15 @@
 name: Audit Log
 on:
-  pull_request_review:
-    types: [submitted]
+  pull_request:
+    types:
+      - closed
+
 jobs:
-  log_events:
+  pr_merged_job:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Log event
+      - name: Check if PR was merged
+        if: github.event.pull_request.merged == true
         run: |
-          date >> audit.log
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "Published Changes"
-          git push
-
-      - name: Debugging Output
-        run: |
-          echo "GitHub Workspace: ${{ github.workspace }}"
-          ls -al ${{ github.workspace }}
-
-  approved:
-    if: github.event.review.state == 'approved'
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "This PR was approved"
-          date >> audit.log
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "Published Changes"
-          git push
+          echo "Pull Request #${{ github.event.pull_request.number }} was merged."
