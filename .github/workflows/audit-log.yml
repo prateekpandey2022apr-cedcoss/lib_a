@@ -1,17 +1,7 @@
 name: Audit Log
 on:
-  push:
-    branches:
-      - main
-  issues:
-    types:
-      - opened
-      - closed
-  pull_request:
-    types:
-      - opened
-      - closed
-  fork:
+  pull_request_review:
+    types: [submitted]
 jobs:
   log_events:
     runs-on: ubuntu-latest
@@ -32,3 +22,16 @@ jobs:
         run: |
           echo "GitHub Workspace: ${{ github.workspace }}"
           ls -al ${{ github.workspace }}
+
+  approved:
+    if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "This PR was approved"
+          date >> audit.log
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Published Changes"
+          git push
