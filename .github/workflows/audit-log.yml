@@ -12,4 +12,4 @@ jobs:
       - name: Check if PR was merged
         if: github.event.pull_request.merged == true
         run: |
-          echo "Pull Request #${{ github.event.pull_request.number }} was merged."  >> audit.log
+          echo "Pull Request #${{ github.event.pull_request.number }} was merged."
