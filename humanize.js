@@ -68,6 +68,7 @@ function humanize(fromStr) {
 
   // console.log({ secs, mins, hrs, days, weeks, months, years });
   const timeObj = { secs, mins, hrs, days, weeks, months, years };
+  cgbfbhgfh
 
   if (secs < 60) {
     return format("secs", timeObj);
