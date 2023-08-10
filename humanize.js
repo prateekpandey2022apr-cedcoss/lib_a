@@ -5,7 +5,7 @@ function plural(number, word, suffixes) {
     return `${word}${suffixes[1]}`;
   }
 }
-
+console.log('hello')
 function humanize(fromStr) {
   function format(type, timeObj) {
     const { secs, mins, hrs, days, weeks, months, years } = timeObj;
